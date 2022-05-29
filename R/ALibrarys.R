@@ -1,0 +1,6 @@
+library(timeSeries)
+library(jsonlite)
+library(httr)
+library(quantmod)
+library(lubridate)
+library(fExoticOptions)
