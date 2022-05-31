@@ -46,9 +46,11 @@ generateCashflows <- function(portfolio , termsheet){
 
       output[[2]][[1]]$Event_Payoff <- output[[2]][[1]]$Event_Payoff + output[[3]][[1]]$Event_Payoff
 
-      output <- rbind(output[[1]][[1]],output[[2]][[1]])
+      yield <- num_optns * sum(output[[2]][[1]]$Event_Payoff) + sum(output[[1]][[1]]$Event_Payoff)
 
-      output$Event_Payoff[c(3,6)] <- c(num_optns*output$Event_Payoff[3],num_optns*output$Event_Payoff[6])
+      output <- output[[2]][[1]]
+
+      output$Event_Payoff[c(1,4)] <- c(-as.numeric(termsheet["Nominal",]),as.numeric(termsheet["Nominal",])+yield)
 
       output <- output[order(output$Event_Date),]
 
@@ -57,9 +59,11 @@ generateCashflows <- function(portfolio , termsheet){
     else{
       num_optns <- as.numeric(termsheet["Options",])
 
-      output <- rbind(output[[1]][[1]],output[[2]][[1]])
+      yield  <- num_optns * sum(output[[2]][[1]]$Event_Payoff) + sum(output[[1]][[1]]$Event_Payoff)
 
-      output$Event_Payoff[c(3,6)] <- c(num_optns*output$Event_Payoff[3],num_optns*output$Event_Payoff[6])
+      output <- output[[2]][[1]]
+
+      output$Event_Payoff[c(1,4)] <- c(-as.numeric(termsheet["Nominal",]),as.numeric(termsheet["Nominal",])+yield)
 
       output <- output[order(output$Event_Date),]
 
@@ -337,9 +341,9 @@ generateCashflows <- function(portfolio , termsheet){
     else{
       yield <- as.numeric(termsheet["Options",])*sum(output[[2]][[1]]$Event_Payoff) + sum(output[[1]][[1]]$Event_Payoff)
 
-      output <- output[[1]]
+      output <- output[[2]]
 
-      output[[1]]$Event_Payoff[c(1,2)] <- c(-as.numeric(termsheet["Nominal",]),as.numeric(termsheet["ProtectedAmount",])+yield)
+      output[[1]]$Event_Payoff[c(1,4)] <- c(-as.numeric(termsheet["Nominal",]),as.numeric(termsheet["Nominal",])+yield)
 
       output <- as.data.frame(output)
 
