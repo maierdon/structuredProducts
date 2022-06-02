@@ -35,7 +35,7 @@ testidea <- function(type,
                                     vola_at_issue = vola_at_issue)
   }
   #Capital Protection with Participation ---------------------
-  else if (type == "Capital Protection with Participation"){
+  else if (type == "Capital Protection Certificate"){
     out_termsheet <- CapitalProtection(Nominal = Nominal,
                                        Underlying = Underlying,
                                        IssueDate = IssueDate,
@@ -60,7 +60,7 @@ testidea <- function(type,
                                          vola_at_issue = vola_at_issue)
   }
   #Discount Certificate with Knock Out------------------
-  else if (type == "Discount Certificate with Knock Out"){
+  else if (type == "Barrier Discount Certificate"){
     out_termsheet <- DiscountCertificateWithKnockOut(Nominal = Nominal,
                                                      Underlying = Underlying,
                                                      IssueDate = IssueDate,
@@ -156,7 +156,7 @@ testidea <- function(type,
                                       vola = vola_at_issue)
   }
   #Warrant with Knock Out ---------------------------
-  else if (type == "Warrant with Knock Out"){
+  else if (type == "Knock Out Warrant"){
     out_termsheet <- WarrantWithKnockOut(Nominal = Nominal,
                                          Underlying = Underlying,
                                          IssueDate = IssueDate,

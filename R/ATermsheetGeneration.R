@@ -268,7 +268,7 @@ CapitalProtection <- function(Nominal,
   TermSheet <- TermSheet[,-1]
   TermSheet <- t(TermSheet)
   TermSheet = as.data.frame(TermSheet)
-  colnames(TermSheet) <- "Capital Protection Certificate with Participation"
+  colnames(TermSheet) <- "Capital Protection Certificate"
   return(TermSheet)
 
 }
@@ -1429,7 +1429,7 @@ DiscountCertificateWithKnockOut  <- function(Nominal,
                                             expected_dividends = expected_dividends,
                                             vola_at_issue = vola_at_issue)
 
-  colnames(contractOne) <- "Discount Certificate with Knock Out"
+  colnames(contractOne) <- "Barrier Discount Certificate"
 
   contractTwo <- DiscountCertificate(Nominal = Nominal,
                                      Underlying = Underlying,
@@ -1441,7 +1441,7 @@ DiscountCertificateWithKnockOut  <- function(Nominal,
                                      vola_at_issue = vola_at_issue,
                                      barrier = T, BarrierPerc = BarrierPerc)
 
-  colnames(contractTwo) <- "Discount Certificate with Knock Out"
+  colnames(contractTwo) <- "Barrier Discount Certificate"
 
   out <- barrier_contract(risk_factor = Underlying, #think about the case of the price
                           contract_1 = contractOne,
@@ -1540,7 +1540,7 @@ WarrantWithKnockOut <- function(Nominal, #Nominal = Invested Ammount
                          BarrierPerc = BarrierPerc)
   IssueDate <- as.Date(as.character(contractOne["IssueDate",]))
   MaturityDate <- as.Date(as.character(contractOne["MaturityDate",]))
-  colnames(contractOne) <- "Warrant with Knock Out"
+  colnames(contractOne) <- "Knock Out Warrant"
   #if Barrier is breached
   contractTwo <- ZeroBond(Nominal = Nominal,
                           Underlying = Underlying,
@@ -1555,7 +1555,7 @@ WarrantWithKnockOut <- function(Nominal, #Nominal = Invested Ammount
                           numb = as.numeric(contractOne["Options",])
                           )
 
-  colnames(contractTwo) <- "Warrant with Knock Out"
+  colnames(contractTwo) <- "Knock Out Warrant"
 
   out <- barrier_contract(risk_factor = Underlying, #think about the case of the price
                           contract_1 = contractOne,

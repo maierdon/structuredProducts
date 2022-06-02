@@ -35,7 +35,7 @@ generateCashflows <- function(portfolio , termsheet){
     return(output)
   }
   # product CapitalProtection-------
-  if(product == "Capital Protection Certificate with Participation"){
+  if(product == "Capital Protection Certificate"){
 
     events <- generateEvents(portfolio,serverURL = serverURL)
 
@@ -72,7 +72,7 @@ generateCashflows <- function(portfolio , termsheet){
     }
   }
   # product Discount Certificate with Knock Out------
-  if(product == "Discount Certificate with Knock Out"){
+  if(product == "Barrier Discount Certificate"){
     events <- generateEvents(ptf = portfolio, serverURL = serverURL)
 
     output <- create_proper_table(events)
@@ -391,7 +391,7 @@ generateCashflows <- function(portfolio , termsheet){
 
   }
   # product Warrant with Knock Out------
-  if(product == "Warrant with Knock Out"){
+  if(product == "Knock Out Warrant"){
     events <- generateEvents(ptf = portfolio, serverURL = serverURL)
 
     output <- create_proper_table(events)

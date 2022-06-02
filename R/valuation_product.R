@@ -78,7 +78,7 @@ product_valuation <- function(product_termsheet, #termsheet of the product that 
   }
 
   #capital protection certificate
-  if (colnames(product_termsheet) == "Capital Protection Certificate with Participation")
+  if (colnames(product_termsheet) == "Capital Protection Certificate")
   {
 
     bond_part <- bond_valuation(nominal = as.numeric(product_termsheet["BondComponent",]),
@@ -142,7 +142,7 @@ product_valuation <- function(product_termsheet, #termsheet of the product that 
   }
 
   #barrier discount certificate
-  if (colnames(product_termsheet) == "Discount Certificate with Knock Out")
+  if (colnames(product_termsheet) == "Barrier Discount Certificate")
   {
     LEPO <- option_valuation(S = underlying,
                              K = 0.01,
@@ -380,8 +380,9 @@ product_valuation <- function(product_termsheet, #termsheet of the product that 
                                                 barrier = as.numeric(product_termsheet["BarrierLevel",]),
                                                 sig = vola,
                                                 maturity_date = product_termsheet["MaturityDate",],
-                                                val_date = valuation_date,
+                                                val_date = as.character(product_termsheet["IssueDate",]),
                                                 type = "pdi")
+    coupon <- as.numeric(product_termsheet["Options",]) * short_put_issue
     if ("BarrierEventDate" %in% rownames(product_termsheet)){
       EventDate <- as.Date(as.character(product_termsheet["BarrierEventDate",]))
       if (valuation_date < EventDate){
@@ -395,7 +396,7 @@ product_valuation <- function(product_termsheet, #termsheet of the product that 
                                               maturity_date = product_termsheet["MaturityDate",],
                                               val_date = valuation_date,
                                               type = "pdi")
-        product_price <- bond_part - (as.numeric(product_termsheet["Options",]) * short_put)#- short_put_issue))
+        product_price <- bond_part - (as.numeric(product_termsheet["Options",]) * short_put) + coupon#- short_put_issue))
         return(product_price)
       }
       else{
@@ -407,7 +408,7 @@ product_valuation <- function(product_termsheet, #termsheet of the product that 
                                       maturity_date = product_termsheet["MaturityDate",],
                                       valuation_date = valuation_date,
                                       type = "P")
-        product_price <- bond_part - (as.numeric(product_termsheet["Options",]) * short_put)# - short_put_issue))
+        product_price <- bond_part - (as.numeric(product_termsheet["Options",]) * short_put) + coupon# - short_put_issue))
         return(product_price)
       }
     }
@@ -422,10 +423,11 @@ product_valuation <- function(product_termsheet, #termsheet of the product that 
                                             maturity_date = product_termsheet["MaturityDate",],
                                             val_date = valuation_date,
                                             type = "pdi")
-      product_price <- bond_part - (as.numeric(product_termsheet["Options",]) * short_put)# - short_put_issue))
+      product_price <- bond_part - (as.numeric(product_termsheet["Options",]) * short_put) + coupon# - short_put_issue))
       return(product_price)
     }
   }
+
 
   # Bonus Certificate
   if (colnames(product_termsheet) == "Bonus Certificate")
@@ -494,7 +496,7 @@ product_valuation <- function(product_termsheet, #termsheet of the product that 
   }
 
   # Warrant with knock-out
-  if (colnames(product_termsheet) == "Warrant with Knock Out")
+  if (colnames(product_termsheet) == "Knock Out Warrant")
   {
     Strike <- as.numeric(product_termsheet["Strike",])
 
